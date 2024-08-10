@@ -1,1 +1,1 @@
-from py_toggle.customtoggle import PyToggle, CQFrame
+from py_toggle.CustomWidgets import PyToggle, CQFrame, CTitleBar

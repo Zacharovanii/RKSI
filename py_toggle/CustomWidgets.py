@@ -1,6 +1,8 @@
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
+
+
 # from time import sleep
 
 
@@ -56,7 +58,6 @@ class PyToggle(QCheckBox):
     def hitButton(self, pos: QPoint):
         return self.contentsRect().contains(pos)
 
-
     def paintEvent(self, e):
         p = QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
@@ -94,7 +95,7 @@ class CQFrame(QFrame):
     def event(self, e):
         if e.type() == QEvent.Type.MouseButtonPress:
             # print('clicked')
-            if not self.func is None:
+            if self.func is not None:
                 self.func()
 
         return super().event(e)
@@ -103,11 +104,56 @@ class CQFrame(QFrame):
         self.func = new_func
 
 
+class CTitleBar(QWidget):
+    def __init__(self, parent=None):
+        super(CTitleBar, self).__init__(parent=parent)
+        self.setFixedHeight(40)
 
+        self.close_button = QPushButton("X")
+        self.minimize_button = QPushButton("-")
+        self.maximize_button = QPushButton("□")
 
+        self.setStyleSheet('''
+        QWidget {
+            background-color: #2E3440;        
+        }
+        
+        QPushButton {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+        QPushButton:hover {
+            background-color: #e74c3c;
+        }
+        ''')
 
+        layout = QHBoxLayout(self)
+        layout.addStretch(1)
+        layout.addWidget(self.minimize_button)
+        layout.addWidget(self.maximize_button)
+        layout.addWidget(self.close_button)
+        layout.setContentsMargins(0, 0, 0, 0)
+        self.setLayout(layout)
 
+        self.close_button.clicked.connect(parent.close)
+        self.minimize_button.clicked.connect(parent.showMinimized)
+        self.maximize_button.clicked.connect(parent.showMaximized)
 
+        self.is_moving = False
 
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.is_moving = True
+            self.start_point = event.pos()
+            self.window_point = self.parent().frameGeometry().topLeft()
 
+    def mouseMoveEvent(self, event):
+        if self.is_moving:
+            self.parent().move(self.window_point + event.globalPosition().toPoint() - self.start_point)
 
+    def mouseReleaseEvent(self, event):
+        self.is_moving = False
