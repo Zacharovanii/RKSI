@@ -165,6 +165,7 @@ class Ui_MainWindow(object):
         self.gridLayout_4 = QGridLayout(self.schedule_page)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setSpacing(10)
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.calendar = QCalendarWidget(self.schedule_page)
         self.calendar.setObjectName(u"calendar")
@@ -178,25 +179,26 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.comboBox = QComboBox(self.schedule_page)
-        self.comboBox.setObjectName(u"comboBox")
+        self.group_comboBox = QComboBox(self.schedule_page)
+        self.group_comboBox.setObjectName(u"group_comboBox")
 
-        self.horizontalLayout_5.addWidget(self.comboBox)
+        self.horizontalLayout_5.addWidget(self.group_comboBox)
 
-        self.comboBox_2 = QComboBox(self.schedule_page)
-        self.comboBox_2.setObjectName(u"comboBox_2")
+        self.teacher_comboBox = QComboBox(self.schedule_page)
+        self.teacher_comboBox.setObjectName(u"teacher_comboBox")
 
-        self.horizontalLayout_5.addWidget(self.comboBox_2)
+        self.horizontalLayout_5.addWidget(self.teacher_comboBox)
 
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
 
         self.scroll_info = QScrollArea(self.schedule_page)
         self.scroll_info.setObjectName(u"scroll_info")
+        self.scroll_info.setStyleSheet(u"")
         self.scroll_info.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 278, 501))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 276, 501))
         self.scroll_info.setWidget(self.scrollAreaWidgetContents)
 
         self.verticalLayout_3.addWidget(self.scroll_info)

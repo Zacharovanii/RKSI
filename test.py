@@ -1,9 +1,8 @@
 import sys
-import os
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-from py_toggle import PyToggle
+from My_Custom_Widgets import CustomQCalendarWidget
 
 
 class MainWindow(QMainWindow):
@@ -18,7 +17,7 @@ class MainWindow(QMainWindow):
         self.layout = QVBoxLayout()
 
         # ADD WIDGETS TO LAYOUT
-        self.toggle = PyToggle()
+        self.toggle = CustomQCalendarWidget()
         self.layout.addWidget(self.toggle, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignCenter)
 
         # SET CENTRAL WIDGET

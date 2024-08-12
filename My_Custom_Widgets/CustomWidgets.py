@@ -87,9 +87,9 @@ class PyToggle(QCheckBox):
         p.end()
 
 
-class CQFrame(QFrame):
+class CustomQFrame(QFrame):
     def __init__(self, parent, func=None):
-        super(CQFrame, self).__init__(parent=parent)
+        super(CustomQFrame, self).__init__(parent=parent)
         self.func = func
 
     def event(self, e):
@@ -104,56 +104,16 @@ class CQFrame(QFrame):
         self.func = new_func
 
 
-class CTitleBar(QWidget):
+class CustomQCalendarWidget(QCalendarWidget):
     def __init__(self, parent=None):
-        super(CTitleBar, self).__init__(parent=parent)
-        self.setFixedHeight(40)
+        super(CustomQCalendarWidget, self).__init__(parent=parent)
 
-        self.close_button = QPushButton("X")
-        self.minimize_button = QPushButton("-")
-        self.maximize_button = QPushButton("□")
-
-        self.setStyleSheet('''
-        QWidget {
-            background-color: #2E3440;        
-        }
-        
-        QPushButton {
-            background-color: #34495e;
-            color: white;
-            border: none;
-            padding: 5px;
-            font-size: 14px;
-            border-radius: 5px;
-        }
-        QPushButton:hover {
-            background-color: #e74c3c;
-        }
-        ''')
-
-        layout = QHBoxLayout(self)
-        layout.addStretch(1)
-        layout.addWidget(self.minimize_button)
-        layout.addWidget(self.maximize_button)
-        layout.addWidget(self.close_button)
-        layout.setContentsMargins(0, 0, 0, 0)
-        self.setLayout(layout)
-
-        self.close_button.clicked.connect(parent.close)
-        self.minimize_button.clicked.connect(parent.showMinimized)
-        self.maximize_button.clicked.connect(parent.showMaximized)
-
-        self.is_moving = False
-
-    def mousePressEvent(self, event):
-        if event.button() == Qt.MouseButton.LeftButton:
-            self.is_moving = True
-            self.start_point = event.pos()
-            self.window_point = self.parent().frameGeometry().topLeft()
-
-    def mouseMoveEvent(self, event):
-        if self.is_moving:
-            self.parent().move(self.window_point + event.globalPosition().toPoint() - self.start_point)
-
-    def mouseReleaseEvent(self, event):
-        self.is_moving = False
+    def paintCell(self, painter, rect, date):
+        if date == date.currentDate():
+            painter.setPen(QPen(QColor(0, 200, 200), 2, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap))
+            painter.drawEllipse(rect)
+            # painter.drawLine(rect.topRight(), rect.topLeft())
+            # painter.drawLine(rect.topRight(), rect.bottomRight())
+            # painter.drawLine(rect.bottomLeft(), rect.bottomRight())
+            # painter.drawLine(rect.topLeft(), rect.bottomLeft())
+        super().paintCell(painter, rect, date)

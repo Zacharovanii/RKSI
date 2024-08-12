@@ -2,7 +2,7 @@ from design import Ui_MainWindow
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtCore import QPropertyAnimation, Qt, QSize, QParallelAnimationGroup, QRect
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QTextCharFormat, QColor
 
 
 class MainWindow(QMainWindow):
@@ -70,10 +70,16 @@ class MainWindow(QMainWindow):
 
         self.ui.calendar.setStyleSheet('''
         QCalendarWidget {
-            border-radius: 5px;
-            border: 1px solid #dcdcdc;
+            border: none;
+            color: white;
         }
-        QCalendarWidget QToolButton {
+        
+        QCalendarWidget QTableView::item:selected {
+            background-color: #5A9;
+            color: black;
+        }
+        
+        QToolButton {
             color: white;
             background-color: #282828;
             border: none;
@@ -82,25 +88,33 @@ class MainWindow(QMainWindow):
             margin: 5px;
         }
         
-        QCalendarWidget QToolButton:hover {
+        QToolButton:hover {
             background-color: #666666;
         }
         
-        QCalendarWidget QWidget#qt_calendar_navigationbar {
+        QWidget#qt_calendar_navigationbar {
             background-color: #282828;
-            border-radius: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
         
-        QCalendarWidget QMenu {
+        QMenu {
             background-color: #282828;
             color: white;
         }
         
-        QCalendarWidget QSpinBox {
+        QSpinBox {
             background-color: #2c3e50;
             color: white;
             border: none;
         }
+        
+        QHeaderView::section {
+            background-color: #282828;  
+            color: white;               
+            padding: 5px;
+            border: 1px solid #dcdcdc;
+            }
         
         #qt_calendar_prevmonth {
             icon-size: 25px;
@@ -112,46 +126,117 @@ class MainWindow(QMainWindow):
             qproperty-icon: url(icons/right_arrow.png);
         }
         
-        QCalendarWidget QAbstractItemView:enabled {
-            background-color: #2c3e50;
+        QAbstractItemView:enabled {
+            background-color: #282828;
             color: white;
         } 
         
-        QCalendarWidget QAbstractItemView:disabled {
-            background-color: #2c3e50;
-            color: rgba(51, 51, 51, 0.7);;
+        QAbstractItemView:disabled {
+            background-color: #282828;
+            color: rgba(160, 160, 160, 0.7);
+        }
+        
+        QTableView {
+            font-weight: bold;
         }
         ''')
+        weekdays_format = QTextCharFormat()
+        weekdays_format.setForeground(QColor('white'))
+        weekdays_format.setBackground(QColor(40, 40, 40))
+        for day in Qt.DayOfWeek:
+            self.ui.calendar.setWeekdayTextFormat(day, weekdays_format)
 
         self.ui.slider_m.setStyleSheet('''
         QFrame {
-            background-color:  #002F55;
+            background-color:  #282828;
         }
         
         QPushButton {
-            background-color: #002F55;
+            background-color: #282828;
             color: white;
             border: none;
             padding: 10px;
         }
         
         QPushButton:hover {
-            background-color: #5E81AC;
+            background-color: #5A9;
         }
         ''')
         self.ui.slider_b.setStyleSheet('''
         QFrame {
-            background-color:  #002F55;
+            background-color:  #282828;
         }
         QPushButton {
-            background-color: #002F55;
+            background-color: #282828;
             color: white;
             border: none;
             padding: 10px;
         }
         
         QPushButton:hover {
-            background-color: #5E81AC;
+            background-color: #5A9;
+        }
+        ''')
+
+        self.ui.scroll_info.setStyleSheet('''
+            background-color: #282828;
+            border: none;
+            border-radius: 10px;
+        ''')
+
+        self.ui.group_comboBox.setStyleSheet('''
+        QComboBox {
+            border: 2px solid #5A9;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #282828;
+            font-weight: bold;
+        }
+    
+        QComboBox::drop-down {
+            width: 30px;
+            border-left: 2px solid #282828;
+            background-color: #282828;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    
+        QComboBox QAbstractItemView {
+            border: 1px solid #5A9;
+            selection-background-color: #A9C;
+            background-color: #FFF;
+        }
+        
+        QComboBox::down-arrow {
+            image: url(icons/arrow_down.svg);
+        }
+        ''')
+
+        self.ui.teacher_comboBox.setStyleSheet('''
+        QComboBox {
+            border: 2px solid #5A9;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #282828;
+            font-weight: bold;
+        }
+        
+        QComboBox::drop-down {
+            width: 30px;
+            border-left: 2px solid #282828;
+            background-color: #282828;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        
+        QComboBox::down-arrow {
+            image: url(icons/arrow_down.svg);
+        }
+        
+        QComboBox QAbstractItemView {
+            border: 1px solid #5A9;
+            selection-background-color: #A9C;
+            background-color: #FFF;
         }
         ''')
 
